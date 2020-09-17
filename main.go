@@ -1,10 +1,10 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"github.com/HETIC-MT-P2021/DB_DUFOURFAKHOURI_P01/database"
 )
 
 func HandleRequest(){
@@ -26,21 +26,10 @@ func HandleRequest(){
 	log.Fatal(router.Run(":8080"))
 }
 
-func dbSetup(){
-	db, err := sql.Open("mysql",
-		"gobdd:gobdd@tcp(127.0.0.1:3306)/")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-}
 
 func main() {
 	HandleRequest()
-
-	dbSetup()
-
-	//insert, err := db.Query("J'aodre la sacuisse (1, 'SooS')")
+	database.DbConnector()
 }
 
 
