@@ -16,6 +16,7 @@ func InitRouter(router *gin.Engine) {
 		{
 			v1.GET("/employee", controllers.GetEmployees)
 			v1.GET("/offices/:id/employees", controllers.GetEmployeesByOfficeCode)
+			v1.GET("/offices/:id", controllers.GetOffices)
 		}
 	}
 }
