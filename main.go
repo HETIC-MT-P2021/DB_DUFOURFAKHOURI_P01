@@ -1,14 +1,35 @@
 package main
 
 import (
-	"github.com/HETIC-MT-P2021/DB_DUFOURFAKHOURI_P01/database"
-	"github.com/HETIC-MT-P2021/DB_DUFOURFAKHOURI_P01/router"
+	"log"
+	"time"
+
+	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/database"
+	"github.com/gin-gonic/gin"
+	cors "github.com/itsjamie/gin-cors"
+
+	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/router"
 )
 
 func main() {
-	database.DbConnector()
-	router.HandleRequest()
+
+	time.Sleep(5 * time.Second)
+
+	database.InitializeDb()
+
+	r := gin.Default()
+
+	r.Use(cors.Middleware(cors.Config{
+		Origins:         "*",
+		Methods:         "GET, PUT, POST, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "Authorization",
+		MaxAge:          50 * time.Second,
+		Credentials:     true,
+		ValidateHeaders: false,
+	}))
+
+	router.InitRouter(r)
+
+	log.Fatal(r.Run(":8080")) // listen and serve on 8080
 }
-
-
-
