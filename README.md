@@ -15,8 +15,8 @@ To run this project, you will also need to install the following dependencies on
 
 ## How to launch the project
 * To run the project
-RUN `docker-compose up --build`
+ `docker-compose up --build`
 
 * Once the project is up, import the DB with:
-RUN `docker exec -i db_dufourfakhouri_p01_db_1 sh -c 'exec mysql -ugobdd -p"gobdd" image_gobdd' < ./docker/data/database.sql`
+ `docker exec -i db_dufourfakhouri_p01_db_1 sh -c 'exec mysql -ugobdd -p"gobdd" image_gobdd' < ./docker/data/database.sql`
 
