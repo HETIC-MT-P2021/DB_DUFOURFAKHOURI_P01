@@ -1,12 +1,14 @@
 package models
 
+import "github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/utils"
+
 type Employee struct {
-	EmployeeNumber uint64 `json:"employeeNumber"`
-	Lastname       string `json:"lastName"`
-	Firstname      string `json:"firstName"`
-	Extension      string `json:"extention"`
-	Email          string `json:"email"`
-	OfficeCode     string `json:"officeCode"`
-	JobTitle       string `json:"jobTitle"`
-	ReportsTo      string `json:"reportsCode"`
+	EmployeeNumber uint64           `json:"employeeNumber"`
+	LastName       string           `json:"lastName"`
+	FirstName      string           `json:"firstName"`
+	Extension      string           `json:"extention"`
+	Email          string           `json:"email"`
+	OfficeCode     string           `json:"officeCode"`
+	JobTitle       string           `json:"jobTitle"`
+	ReportsTo      utils.NullString `json:"reportsCode"`
 }
