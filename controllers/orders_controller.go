@@ -3,23 +3,23 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/models"
 	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/repository"
 	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/jasongauvin/DB_GAUVIN_P01/models"
 )
 
-func GetOfficeByCode(c *gin.Context) {
-	var offices *models.Office
+func GetOrderByCode(c *gin.Context) {
+	var orders *[]models.OrderProduct
 	var err error
 	id := utils.ParseStringToUint64(c.Param("id"))
 
-	offices, err = repository.FindOfficeByCode(id)
+	orders, err = repository.FindOrderByCode(id)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, "Couldn't fetch offices by code.")
+		c.JSON(http.StatusNotFound, "Couldn't fetch Order by code.")
 		return
 	}
 
-	c.JSON(http.StatusOK, offices)
+	c.JSON(http.StatusOK, orders)
 }

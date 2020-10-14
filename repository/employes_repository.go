@@ -2,18 +2,12 @@ package repository
 
 import (
 	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/database"
-	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/models"
 
-	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/utils"
+	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/models"
 )
 
-func FindEmployees() ([]models.Employee, error) {
-
-	var (
-		EmployeeNumber                                              uint64
-		Lastname, Firstname, Extension, Email, OfficeCode, JobTitle string
-		ReportsTo                                                   utils.NullString
-	)
+func FindEmployees() (*[]models.Employee, error) {
+	employee := models.Employee{}
 
 	rows, err := database.DB.Query("SELECT * FROM employees")
 
@@ -26,31 +20,55 @@ func FindEmployees() ([]models.Employee, error) {
 
 	for rows.Next() {
 		err = rows.Scan(
-			&EmployeeNumber,
-			&Lastname,
-			&Firstname,
-			&Extension,
-			&Email,
-			&OfficeCode,
-			&JobTitle,
-			&ReportsTo)
-
-		employee := models.Employee{
-			EmployeeNumber: EmployeeNumber,
-			Lastname:       Lastname,
-			Firstname:      Firstname,
-			Extension:      Extension,
-			Email:          Email,
-			OfficeCode:     OfficeCode,
-			JobTitle:       JobTitle,
-			ReportsTo:      ReportsTo.String,
-		}
+			&employee.EmployeeNumber,
+			&employee.LastName,
+			&employee.FirstName,
+			&employee.Extension,
+			&employee.Email,
+			&employee.OfficeCode,
+			&employee.JobTitle,
+			&employee.ReportsTo,
+		)
 
 		employees = append(employees, employee)
 	}
 	if err != nil {
-		//panic(err.Error())
+		panic(err.Error())
 	}
 
-	return employees, nil
+	return &employees, nil
+}
+
+func FindEmployeesByOffice(code uint64) (*[]models.Employee, error) {
+	employee := models.Employee{}
+
+	rows, err := database.DB.Query("SELECT e.employeeNumber, e.firstName, e.lastName, e.extension, e.email, e.officeCode, e.jobTitle, e.reportsTo FROM employees e INNER JOIN offices o ON e.officeCode = o.officeCode WHERE o.officeCode = ?;", code)
+
+	defer rows.Close()
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	var employees []models.Employee
+
+	for rows.Next() {
+		err = rows.Scan(
+			&employee.EmployeeNumber,
+			&employee.LastName,
+			&employee.FirstName,
+			&employee.Extension,
+			&employee.Email,
+			&employee.OfficeCode,
+			&employee.JobTitle,
+			&employee.ReportsTo,
+		)
+
+		employees = append(employees, employee)
+	}
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return &employees, nil
 }
