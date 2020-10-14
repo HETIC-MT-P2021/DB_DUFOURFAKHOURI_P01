@@ -5,5 +5,6 @@ Database interaction with basic SQL go module exercice
 RUN docker-compose up --build
 
 Once the project is up, import the DB with:
+
 RUN docker exec -i db_dufourfakhouri_p01_db_1 sh -c 'exec mysql -ugobdd -p"gobdd" image_gobdd' < ./docker/data/database.sql
 
