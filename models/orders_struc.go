@@ -1,16 +1,14 @@
 package models
 
 import (
-	"time"
-
 	"github.com/SteakBarbare/DB_DUFOURFAKHOURI_P01/utils"
 )
 
 type Order struct {
 	OrderNumber       uint64           `json:"orderNumber"`
-	OrderDate         time.Time        `json:"orderDate"`
-	RequiredDate      time.Time        `json:"requiredDate"`
-	ShippedDate       time.Time        `json:"shippedDate"`
+	OrderDate         []uint8          `json:"orderDate"`
+	RequiredDate      []uint8          `json:"requiredDate"`
+	ShippedDate       []uint8          `json:"shippedDate"`
 	Status            string           `json:"status"`
 	Comments          utils.NullString `json:"comments"`
 	CustomerNumber    uint64           `json:"customerNumber"`
